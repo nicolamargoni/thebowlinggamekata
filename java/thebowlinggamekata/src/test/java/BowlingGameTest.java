@@ -22,5 +22,13 @@ public class BowlingGameTest {
         assertEquals(5, game.score());
     }
 
+    @Test
+    public void secondRoll() throws Exception {
+        Game game = new Game();
+        game.roll(5);
+        game.roll(4);
+        assertEquals(9, game.score());
+    }
+
 
 }
