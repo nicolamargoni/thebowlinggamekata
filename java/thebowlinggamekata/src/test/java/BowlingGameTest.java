@@ -30,6 +30,14 @@ public class BowlingGameTest {
         assertEquals(9, game.score());
     }
 
+    @Test
+    public void twoFrames() throws Exception {
+        game.roll(5);
+        game.roll(4);
+        game.roll(3);
+        game.roll(2);
+        assertEquals(2, game.nFrames);
+    }
     /*
     @Test
     public void spare() throws Exception {
