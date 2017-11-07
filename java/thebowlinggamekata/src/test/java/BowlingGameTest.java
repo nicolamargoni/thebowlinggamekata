@@ -15,5 +15,12 @@ public class BowlingGameTest {
         assertEquals(0, game.score());
     }
 
+    @Test
+    public void firstRoll() throws Exception {
+        Game game = new Game();
+        game.roll(5);
+        assertEquals(5, game.score());
+    }
+
 
 }
