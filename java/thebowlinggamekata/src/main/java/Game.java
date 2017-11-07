@@ -9,27 +9,51 @@ public class Game {
         int gameScore = 0;
         int frameScore = 0;
         int roll = 1;
-        boolean spare = false;
+        boolean madeSpare = false;
+        boolean madeStrike = false;
 
         for (int i = 0; i < roolsNumber; i++) {
-            if (spare) {
-                frameScore += 2 * rools[i];
-            } else {
-                frameScore += rools[i];
-            }
+            frameScore += rools[i];
 
             if (isFirstRollOfFrame(roll)) {
+                if (madeSpare) {
+                    frameScore += rools[i];
+                }
+
                 if (isLastRool(i)) {
+                    if (madeStrike) {
+                        gameScore += 2 * frameScore;
+                    } else {
+                        gameScore += frameScore;
+                    }
+                }
+
+                if (madeStrike) {
+                    frameScore += rools[i];
+                }
+
+                if (isStrike(frameScore)) {
+                    madeStrike = true;
+                } else {
+                    roll++;
+                }
+
+            } else {
+                if (madeStrike) {
+                    frameScore += rools[i];
+                    gameScore += frameScore;
+                } else {
                     gameScore += frameScore;
                 }
-                roll++;
-            } else {
+
                 if (isSpare(frameScore)) {
-                    spare = true;
+                    madeSpare = true;
+                } else {
+                    madeSpare = false;
                 }
-                roll--;
-                gameScore += frameScore;
+
                 frameScore = 0;
+                roll--;
             }
         }
         return gameScore;
@@ -42,6 +66,10 @@ public class Game {
 
     public boolean isSpare(int score) {
         return score == 10;
+    }
+
+    public boolean isStrike(int pins) {
+        return pins == 10;
     }
 
     public boolean isFirstRollOfFrame(int roll) {
