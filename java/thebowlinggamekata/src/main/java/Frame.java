@@ -17,9 +17,13 @@ public class Frame {
 
     public int score() {
         int score = 0;
-        for (int index = rollIndex; index < rollIndex + 2; index++) {
-            if (rolls[index] != Game.ROLL_NOT_EXECUTED) {
-                score += rolls[index];
+        if (isSpare()) {
+            score = 10 + rolls[rollIndex + 2];
+        } else {
+            for (int index = rollIndex; index < rollIndex + 2; index++) {
+                if (rolls[index] != Game.ROLL_NOT_EXECUTED) {
+                    score += rolls[index];
+                }
             }
         }
         return score;
@@ -34,6 +38,10 @@ public class Frame {
             return rolls[rollIndex] != Game.ROLL_NOT_EXECUTED
                     && rolls[rollIndex + 1] != Game.ROLL_NOT_EXECUTED;
         }
+    }
+
+    public boolean isSpare() {
+        return rolls[rollIndex] + rolls[rollIndex + 1] == 10;
     }
 
 
