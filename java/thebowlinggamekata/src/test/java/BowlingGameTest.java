@@ -70,6 +70,14 @@ public class BowlingGameTest {
         assertFalse(game.isOver);
     }
 
+    @Test
+    public void mustNotFinishAfterTwoStriketLastFrame() throws Exception {
+        doRolls(1, 18);
+        doRolls(10,2);
+
+        assertFalse(game.isOver);
+    }
+
 
     public void doRolls(int pins, int times) {
         for (int rollIndex = 0; rollIndex < times; rollIndex++) {
