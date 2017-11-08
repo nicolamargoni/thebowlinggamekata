@@ -2,17 +2,20 @@
 import java.util.ArrayList;
 
 public class Game {
-    private int[] rools = new int[21];
-    private int rollIndex = -1;
+    public static final int ROLL_NOT_EXECUTED = -1;
+
+    private int[] rolls = new int[21];
+    private int rollIndex = 0;
 
     private Frame currentFrame;
     private ArrayList<Frame> frames;
     private int frameIndex = 0;
 
-    private int roll = 1;
 
     public Game(ArrayList<Frame> frames) {
         this.frames = frames;
+        initRolls();
+        newFrame();
     }
 
     public int score() {
@@ -25,39 +28,36 @@ public class Game {
 
     public void roll(int pins) {
         addRoll(pins);
-        switch (roll) {
-            case 1:
+        if (currentFrame.isTerminated()) {
+            if (isNotLastFrame()) {
                 newFrame();
-                currentFrame.addRoll(pins);
-                roll++;
-                break;
-            case 2:
-                currentFrame.addRoll(pins);
-                if (isNotLastFrame()) {
-                    roll--;
-                    break;
-                } else {
-                    roll++;
-                    break;
-                }
-            case 3:
-                currentFrame.addRoll(pins);
-                break;
+            }
         }
     }
 
     public void addRoll(int pins) {
-        rollIndex++;
-        rools[rollIndex] = pins;
+        rolls[rollIndex++] = pins;
     }
 
     public void newFrame() {
         frameIndex = frames.size();
-        frames.add(new Frame());
+
+        if (isNotLastFrame()) {
+            frames.add(new Frame(rolls, rollIndex));
+        } else {
+            frames.add(new Frame(rolls, rollIndex, true));
+        }
+
         currentFrame = frames.get(frameIndex);
     }
 
     public boolean isNotLastFrame() {
         return frameIndex != 9;
+    }
+
+    public void initRolls() {
+        for (int index = 0; index < 21; index++) {
+            rolls[index] = ROLL_NOT_EXECUTED;
+        }
     }
 }
