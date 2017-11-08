@@ -1,14 +1,18 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class BowlingGameTest {
+    private ArrayList<Frame> frames;
     private Game game;
 
     @Before
     public void setUp() {
-        game = new Game();
+        frames = new ArrayList<Frame>();
+        game = new Game(frames);
     }
 
     @Test
@@ -31,13 +35,26 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void twoFrames() throws Exception {
+    public void afterFourRollsThereMustBeTwoFrames() throws Exception {
         game.roll(5);
         game.roll(4);
         game.roll(3);
         game.roll(2);
-        assertEquals(2, game.nFrames);
+        assertEquals(2, frames.size());
     }
+
+    @Test
+    public void afterTwentyOneRollsThereMustBeThenFrames() throws Exception {
+        doRolls();
+        assertEquals(10, frames.size());
+    }
+
+    public void doRolls() {
+        for (int rollIndex = 0; rollIndex < 21; rollIndex++) {
+            game.roll(5);
+        }
+    }
+
     /*
     @Test
     public void spare() throws Exception {
