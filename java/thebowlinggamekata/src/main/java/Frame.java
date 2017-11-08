@@ -1,17 +1,10 @@
 public class Frame {
-    private int[] rolls;
-    private int rollIndex;
-    private boolean isLast = false;
+    public int[] rolls;
+    public int rollIndex;
 
     public Frame(int[] rolls, int rollIndex) {
         this.rolls = rolls;
         this.rollIndex = rollIndex;
-    }
-
-    public Frame(int[] rolls, int rollIndex, boolean isLast) {
-        this.rolls = rolls;
-        this.rollIndex = rollIndex;
-        this.isLast = isLast;
     }
 
     public int score() {
@@ -19,12 +12,8 @@ public class Frame {
             return 10 + rolls[rollIndex + 1] + rolls[rollIndex + 2];
         }
 
-        if (!isLast) {
-            if (madeSpare()) {
-                return 10 + rolls[rollIndex + 2];
-            }
-        } else {
-            return 10 + 2 * rolls[rollIndex + 2];
+        if (madeSpare()) {
+            return 10 + rolls[rollIndex + 2];
         }
 
         int score = 0;
@@ -37,24 +26,12 @@ public class Frame {
     }
 
     public boolean isTerminated() {
-        if (isLast) {
-            if (madeSpare() && !thirdRollExecuted()) {
-                return false;
-            }
-
-            if (thereAreTwoStrikes() && !thirdRollExecuted()) {
-                return false;
-            }
-
-            return firstRollExecuted() &&
-                    secondRollExecuted();
-        } else {
-            if (madeStrike()) {
-                return true;
-            }
-            return firstRollExecuted() &&
-                    secondRollExecuted();
+        if (madeStrike()) {
+            return true;
         }
+        return firstRollExecuted() &&
+                secondRollExecuted();
+
     }
 
     public boolean madeSpare() {
@@ -76,14 +53,5 @@ public class Frame {
     public boolean secondRollExecuted() {
         return rollExecuted(rolls[rollIndex + 1]);
     }
-
-    public boolean thirdRollExecuted() {
-        return rollExecuted(rolls[rollIndex + 2]);
-    }
-
-    public boolean thereAreTwoStrikes() {
-        return rolls[rollIndex] == 10 && rolls[rollIndex + 1] == 10;
-    }
-
 
 }

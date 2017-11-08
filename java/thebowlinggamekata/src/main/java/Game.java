@@ -9,7 +9,6 @@ public class Game {
 
     private Frame currentFrame;
     private ArrayList<Frame> frames;
-    private int frameIndex = 0;
 
     public boolean isOver;
 
@@ -32,10 +31,10 @@ public class Game {
         if (!isOver) {
             addRoll(pins);
             if (currentFrame.isTerminated()) {
-                if (isNotLastFrame()) {
-                    newFrame();
-                } else {
+                if (isLastFrame()) {
                     isOver = true;
+                } else {
+                    newFrame();
                 }
             }
         }
@@ -46,19 +45,21 @@ public class Game {
     }
 
     public void newFrame() {
-        frameIndex = frames.size();
-
         if (isNotLastFrame()) {
-            frames.add(new Frame(rolls, rollIndex));
+            currentFrame = new Frame(rolls, rollIndex);
         } else {
-            frames.add(new Frame(rolls, rollIndex, true));
+            currentFrame = new TenFrame(rolls, rollIndex);
         }
 
-        currentFrame = frames.get(frameIndex);
+        frames.add(currentFrame);
     }
 
     public boolean isNotLastFrame() {
-        return frameIndex != 9;
+        return frames.size() != 9;
+    }
+
+    public boolean isLastFrame() {
+        return frames.size() == 10;
     }
 
     public void initRolls() {
