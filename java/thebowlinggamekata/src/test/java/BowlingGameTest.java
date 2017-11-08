@@ -73,9 +73,18 @@ public class BowlingGameTest {
     @Test
     public void mustNotFinishAfterTwoStriketLastFrame() throws Exception {
         doRolls(1, 18);
-        doRolls(10,2);
+        doRolls(10, 2);
 
         assertFalse(game.isOver);
+    }
+
+    @Test
+    public void spareAtLastFrame() {
+        doRolls(1, 18);
+        game.roll(5);
+        game.roll(5);
+        game.roll(5);
+        assertEquals(38, game.score());
     }
 
 
