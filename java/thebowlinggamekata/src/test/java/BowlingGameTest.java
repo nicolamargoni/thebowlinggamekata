@@ -34,28 +34,14 @@ public class BowlingGameTest {
         assertEquals(9, game.score());
     }
 
-    @Test
-    public void afterFourRollsThereMustBeTwoFrames() throws Exception {
-        game.roll(5);
-        game.roll(4);
-        game.roll(3);
-        game.roll(2);
-        assertEquals(2, frames.size());
-    }
 
     @Test
-    public void afterTwentyOneRollsThereMustBeThenFrames() throws Exception {
+    public void thereMustBeThenFramesAfterTwentyOneRolls() throws Exception {
         doRolls();
         assertEquals(10, frames.size());
     }
 
-    public void doRolls() {
-        for (int rollIndex = 0; rollIndex < 21; rollIndex++) {
-            game.roll(5);
-        }
-    }
 
-    /*
     @Test
     public void spare() throws Exception {
         game.roll(6);
@@ -63,6 +49,8 @@ public class BowlingGameTest {
         game.roll(5);
         assertEquals(20, game.score());
     }
+
+    /*
 
     @Test
     public void strike() throws Exception {
@@ -72,4 +60,10 @@ public class BowlingGameTest {
         assertEquals(26, game.score());
     }
 */
+
+    public void doRolls() {
+        for (int rollIndex = 0; rollIndex < 21; rollIndex++) {
+            game.roll(5);
+        }
+    }
 }
