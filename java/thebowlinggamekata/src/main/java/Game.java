@@ -2,11 +2,14 @@
 import java.util.ArrayList;
 
 public class Game {
-    private ArrayList<Integer> rools = new ArrayList<Integer>();
-    private ArrayList<Frame> frames;
-    private int roll = 1;
+    private int[] rools = new int[21];
+    private int rollIndex = -1;
+
     private Frame currentFrame;
+    private ArrayList<Frame> frames;
     private int frameIndex = 0;
+
+    private int roll = 1;
 
     public Game(ArrayList<Frame> frames) {
         this.frames = frames;
@@ -21,7 +24,7 @@ public class Game {
     }
 
     public void roll(int pins) {
-        rools.add(pins);
+        addRoll(pins);
         switch (roll) {
             case 1:
                 newFrame();
@@ -30,14 +33,31 @@ public class Game {
                 break;
             case 2:
                 currentFrame.addRoll(pins);
-                roll--;
+                if (isNotLastFrame()) {
+                    roll--;
+                    break;
+                } else {
+                    roll++;
+                    break;
+                }
+            case 3:
+                currentFrame.addRoll(pins);
                 break;
         }
+    }
+
+    public void addRoll(int pins) {
+        rollIndex++;
+        rools[rollIndex] = pins;
     }
 
     public void newFrame() {
         frameIndex = frames.size();
         frames.add(new Frame());
         currentFrame = frames.get(frameIndex);
+    }
+
+    public boolean isNotLastFrame() {
+        return frameIndex != 9;
     }
 }
