@@ -12,7 +12,6 @@ public class Frame {
         this.rolls = rolls;
         this.rollIndex = rollIndex;
         this.isLast = isLast;
-
     }
 
     public int score() {
@@ -26,7 +25,7 @@ public class Frame {
 
         int score = 0;
         for (int index = rollIndex; index < rollIndex + 2; index++) {
-            if (rolls[index] != Game.ROLL_NOT_EXECUTED) {
+            if (rollExecuted(rolls[index])) {
                 score += rolls[index];
             }
         }
@@ -35,14 +34,17 @@ public class Frame {
 
     public boolean isTerminated() {
         if (isLast) {
-            return firstRoll() != Game.ROLL_NOT_EXECUTED
-                    && secondRoll() != Game.ROLL_NOT_EXECUTED;
+            if (isSpare() && !thirdRollExecuted()) {
+                return false;
+            }
+            return firstRollExecuted() &&
+                    secondRollExecuted();
         } else {
             if (isStrike()) {
                 return true;
             }
-            return firstRoll() != Game.ROLL_NOT_EXECUTED
-                    && secondRoll() != Game.ROLL_NOT_EXECUTED;
+            return firstRollExecuted() &&
+                    secondRollExecuted();
         }
     }
 
@@ -54,12 +56,20 @@ public class Frame {
         return rolls[rollIndex] == 10;
     }
 
-    public int firstRoll() {
-        return rolls[rollIndex];
+    public boolean rollExecuted(int roll) {
+        return roll != Game.ROLL_NOT_EXECUTED;
     }
 
-    public int secondRoll() {
-        return rolls[rollIndex + 1];
+    public boolean firstRollExecuted() {
+        return rollExecuted(rolls[rollIndex]);
+    }
+
+    public boolean secondRollExecuted() {
+        return rollExecuted(rolls[rollIndex + 1]);
+    }
+
+    public boolean thirdRollExecuted() {
+        return rollExecuted(rolls[rollIndex + 2]);
     }
 
 
