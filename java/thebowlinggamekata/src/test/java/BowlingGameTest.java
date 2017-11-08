@@ -62,10 +62,18 @@ public class BowlingGameTest {
         assertTrue(game.isOver);
     }
 
+    @Test
+    public void mustNotFinishAfterSpareAtLastFrame() throws Exception {
+        doRolls(1, 19);
+        game.roll(9);
+
+        assertFalse(game.isOver);
+    }
+
 
     public void doRolls(int pins, int times) {
         for (int rollIndex = 0; rollIndex < times; rollIndex++) {
-            game.roll(5);
+            game.roll(pins);
         }
     }
 }
