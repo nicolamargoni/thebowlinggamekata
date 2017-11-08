@@ -50,8 +50,6 @@ public class BowlingGameTest {
         assertEquals(20, game.score());
     }
 
-    /*
-
     @Test
     public void strike() throws Exception {
         game.roll(10);
@@ -59,7 +57,6 @@ public class BowlingGameTest {
         game.roll(3);
         assertEquals(26, game.score());
     }
-*/
 
     public void doRolls() {
         for (int rollIndex = 0; rollIndex < 21; rollIndex++) {
