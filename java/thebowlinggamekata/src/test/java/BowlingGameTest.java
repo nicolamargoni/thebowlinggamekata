@@ -79,14 +79,28 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void spareAtLastFrame() {
-        doRolls(1, 18);
-        game.roll(5);
-        game.roll(5);
-        game.roll(5);
-        assertEquals(38, game.score());
+    public void thePerfectGame() {
+        doRolls(10, 12);
+
+        assertEquals(300, game.score());
     }
 
+    @Test
+    public void randomGame() {
+        int[] rolls = {1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1, 7, 3, 6, 4, 10, 2, 8, 6};
+        for (int roll : rolls) {
+            game.roll(roll);
+        }
+
+        assertEquals(133, game.score());
+    }
+
+    @Test
+    public void loserGame() {
+        doRolls(0, 20);
+
+        assertEquals(0, game.score());
+    }
 
     public void doRolls(int pins, int times) {
         for (int rollIndex = 0; rollIndex < times; rollIndex++) {

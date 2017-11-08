@@ -5,25 +5,6 @@ public class TenFrame extends Frame {
     }
 
     @Override
-    public int score() {
-        if (madeStrike()) {
-            return 10 + rolls[rollIndex + 1] + rolls[rollIndex + 2];
-        }
-
-        if (madeSpare()) {
-            return 10 + 2 * rolls[rollIndex + 2];
-        }
-
-        int score = 0;
-        for (int index = rollIndex; index < rollIndex + 2; index++) {
-            if (rollExecuted(rolls[index])) {
-                score += rolls[index];
-            }
-        }
-        return score;
-    }
-
-    @Override
     public boolean isTerminated() {
 
         if (madeSpare() && !thirdRollExecuted()) {
