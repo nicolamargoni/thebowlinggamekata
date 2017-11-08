@@ -15,12 +15,16 @@ public class Frame {
     }
 
     public int score() {
-        if (isStrike()) {
+        if (madeStrike()) {
             return 10 + rolls[rollIndex + 1] + rolls[rollIndex + 2];
         }
 
-        if (isSpare()) {
-            return 10 + rolls[rollIndex + 2];
+        if (!isLast) {
+            if (madeSpare()) {
+                return 10 + rolls[rollIndex + 2];
+            }
+        } else {
+            return 10 + 2 * rolls[rollIndex + 2];
         }
 
         int score = 0;
@@ -34,7 +38,7 @@ public class Frame {
 
     public boolean isTerminated() {
         if (isLast) {
-            if (isSpare() && !thirdRollExecuted()) {
+            if (madeSpare() && !thirdRollExecuted()) {
                 return false;
             }
 
@@ -45,7 +49,7 @@ public class Frame {
             return firstRollExecuted() &&
                     secondRollExecuted();
         } else {
-            if (isStrike()) {
+            if (madeStrike()) {
                 return true;
             }
             return firstRollExecuted() &&
@@ -53,11 +57,11 @@ public class Frame {
         }
     }
 
-    public boolean isSpare() {
+    public boolean madeSpare() {
         return rolls[rollIndex] + rolls[rollIndex + 1] == 10;
     }
 
-    public boolean isStrike() {
+    public boolean madeStrike() {
         return rolls[rollIndex] == 10;
     }
 
