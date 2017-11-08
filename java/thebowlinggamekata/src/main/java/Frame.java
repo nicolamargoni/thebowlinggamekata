@@ -16,14 +16,18 @@ public class Frame {
     }
 
     public int score() {
-        int score = 0;
+        if (isStrike()) {
+            return 10 + rolls[rollIndex + 1] + rolls[rollIndex + 2];
+        }
+
         if (isSpare()) {
-            score = 10 + rolls[rollIndex + 2];
-        } else {
-            for (int index = rollIndex; index < rollIndex + 2; index++) {
-                if (rolls[index] != Game.ROLL_NOT_EXECUTED) {
-                    score += rolls[index];
-                }
+            return 10 + rolls[rollIndex + 2];
+        }
+
+        int score = 0;
+        for (int index = rollIndex; index < rollIndex + 2; index++) {
+            if (rolls[index] != Game.ROLL_NOT_EXECUTED) {
+                score += rolls[index];
             }
         }
         return score;
@@ -35,6 +39,9 @@ public class Frame {
                     && rolls[rollIndex + 1] != Game.ROLL_NOT_EXECUTED
                     && rolls[rollIndex + 2] != Game.ROLL_NOT_EXECUTED;
         } else {
+            if (isStrike()) {
+                return true;
+            }
             return rolls[rollIndex] != Game.ROLL_NOT_EXECUTED
                     && rolls[rollIndex + 1] != Game.ROLL_NOT_EXECUTED;
         }
@@ -42,6 +49,10 @@ public class Frame {
 
     public boolean isSpare() {
         return rolls[rollIndex] + rolls[rollIndex + 1] == 10;
+    }
+
+    public boolean isStrike() {
+        return rolls[rollIndex] == 10;
     }
 
 
