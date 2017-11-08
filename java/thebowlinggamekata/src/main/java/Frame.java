@@ -35,15 +35,14 @@ public class Frame {
 
     public boolean isTerminated() {
         if (isLast) {
-            return rolls[rollIndex] != Game.ROLL_NOT_EXECUTED
-                    && rolls[rollIndex + 1] != Game.ROLL_NOT_EXECUTED
-                    && rolls[rollIndex + 2] != Game.ROLL_NOT_EXECUTED;
+            return firstRoll() != Game.ROLL_NOT_EXECUTED
+                    && secondRoll() != Game.ROLL_NOT_EXECUTED;
         } else {
             if (isStrike()) {
                 return true;
             }
-            return rolls[rollIndex] != Game.ROLL_NOT_EXECUTED
-                    && rolls[rollIndex + 1] != Game.ROLL_NOT_EXECUTED;
+            return firstRoll() != Game.ROLL_NOT_EXECUTED
+                    && secondRoll() != Game.ROLL_NOT_EXECUTED;
         }
     }
 
@@ -53,6 +52,14 @@ public class Frame {
 
     public boolean isStrike() {
         return rolls[rollIndex] == 10;
+    }
+
+    public int firstRoll() {
+        return rolls[rollIndex];
+    }
+
+    public int secondRoll() {
+        return rolls[rollIndex + 1];
     }
 
 

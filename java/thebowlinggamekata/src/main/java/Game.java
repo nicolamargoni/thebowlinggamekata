@@ -11,10 +11,12 @@ public class Game {
     private ArrayList<Frame> frames;
     private int frameIndex = 0;
 
+    public boolean isOver;
 
     public Game(ArrayList<Frame> frames) {
         this.frames = frames;
         initRolls();
+        isOver = false;
         newFrame();
     }
 
@@ -27,10 +29,14 @@ public class Game {
     }
 
     public void roll(int pins) {
-        addRoll(pins);
-        if (currentFrame.isTerminated()) {
-            if (isNotLastFrame()) {
-                newFrame();
+        if (!isOver) {
+            addRoll(pins);
+            if (currentFrame.isTerminated()) {
+                if (isNotLastFrame()) {
+                    newFrame();
+                } else {
+                    isOver = true;
+                }
             }
         }
     }
